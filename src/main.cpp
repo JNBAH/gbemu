@@ -1,5 +1,6 @@
 #include <iostream>
 #include "bus.h"
+#include "cpu.h"
 
 int main(int argc, char* argv[]) {
     Bus bus; //Call bus class
@@ -33,5 +34,15 @@ int main(int argc, char* argv[]) {
     bus.write(0xFFFF, 0x1F);
     std::cout << "IE FFFF: 0x" << static_cast<int>(bus.read(0xFFFF)) << "\n";
 
+
+    Cpu cpu(bus);//Create CPU instance with bus
+    for(int i = 0; i < 100000; i++){
+    int cycles = cpu.step();
+        if (cycles < 0) 
+        break; // Stop on error
+    }
+
+
     return 0;
 }
+
